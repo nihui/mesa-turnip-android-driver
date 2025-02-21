@@ -1,9 +1,8 @@
 name: release
-on: pull_request
-# on:
-#   push:
-#     tags:
-#       - '*'
+on:
+  push:
+    tags:
+      - '*'
 
 env:
   mesa-version: 25.0.0
@@ -40,12 +39,14 @@ jobs:
 
         ninja -C build-android
 
-        zip -9 mesa-turnip-android-${{ env.mesa-version }}.zip build-android/src/freedreno/vulkan/libvulkan_freedreno.so
+        mv build-android/src/freedreno/vulkan/libvulkan_freedreno.so vulkan.turnip.so
 
-    # - name: release
-    #   uses: softprops/action-gh-release@v2
-    #   with:
-    #     token: ${{ secrets.GITHUB_TOKEN }}
-    #     tag_name: ${{ env.mesa-version }}
-    #     name: mesa turnip driver ${{ env.mesa-version }} for android
-    #     files: mesa-turnip-android-${{ env.mesa-version }}.zip
+        zip -9 mesa-turnip-android-${{ env.mesa-version }}.zip vulkan.turnip.so
+
+    - name: release
+      uses: softprops/action-gh-release@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        tag_name: ${{ env.mesa-version }}
+        name: mesa turnip driver for android ${{ env.mesa-version }}
+        files: mesa-turnip-android-${{ env.mesa-version }}.zip
