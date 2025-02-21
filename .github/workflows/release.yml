@@ -1,0 +1,53 @@
+name: release
+on: pull_request
+# on:
+#   push:
+#     tags:
+#       - '*'
+
+env:
+  mesa-version: 25.0.0
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v4
+    - name: ndk-fix-debug
+      run: sed -i -e '/^  -g$/d' $ANDROID_NDK_LATEST_HOME/build/cmake/android-legacy.toolchain.cmake
+
+    - name: apt
+      run: apt install -y meson patchelf unzip curl python3-pip flex bison zip python3-mako python-is-python3
+
+    - name: build
+      run: |
+        wget -q https://archive.mesa3d.org/mesa-${{ env.mesa-version }}.tar.xz
+        tar -xf mesa-${{ env.mesa-version }}.tar.xz
+        cd mesa-${{ env.mesa-version }}
+
+        sed -e "s/NDKDIR/$ANDROID_NDK_LATEST_HOME/g" < ../android-aarch64.txt > android-aarch64.txt
+        patch -p1 -i ../mesa-24.3.3-implement-android_stub.patch
+
+        meson setup build-android --cross-file ./android-aarch64 \
+            -Dbuildtype=release \
+            -Dplatforms=android \
+            -Dplatform-sdk-version=26 \
+            -Dandroid-stub=true \
+            -Dgallium-drivers= \
+            -Dvulkan-drivers=freedreno \
+            -Dfreedreno-kmds=kgsl \
+            -Db_lto=true -Dstrip=true
+
+        ninja -C build-android
+
+        $ANDROID_NDK_LATEST_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip -s libvulkan_freedreno.so
+
+        zip -9 mesa-turnip-android-${{ env.mesa-version }}.zip build-android/src/freedreno/vulkan/libvulkan_freedreno.so
+
+    # - name: release
+    #   uses: softprops/action-gh-release@v2
+    #   with:
+    #     token: ${{ secrets.GITHUB_TOKEN }}
+    #     tag_name: ${{ env.mesa-version }}
+    #     name: mesa turnip driver ${{ env.mesa-version }} for android
+    #     files: mesa-turnip-android-${{ env.mesa-version }}.zip
