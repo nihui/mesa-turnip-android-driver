@@ -40,8 +40,6 @@ jobs:
 
         ninja -C build-android
 
-        $ANDROID_NDK_LATEST_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip -s libvulkan_freedreno.so
-
         zip -9 mesa-turnip-android-${{ env.mesa-version }}.zip build-android/src/freedreno/vulkan/libvulkan_freedreno.so
 
     # - name: release
