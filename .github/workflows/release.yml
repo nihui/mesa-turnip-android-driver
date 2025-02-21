@@ -25,7 +25,7 @@ jobs:
         tar -xf mesa-${{ env.mesa-version }}.tar.xz
         cd mesa-${{ env.mesa-version }}
 
-        sed -e "s/NDKDIR/$ANDROID_NDK_LATEST_HOME/g" < ../android-aarch64 > android-aarch64
+        sed -e "s|NDKDIR|$ANDROID_NDK_LATEST_HOME|g" < ../android-aarch64 > android-aarch64
         patch -p1 -i ../mesa-24.3.3-implement-android_stub.patch
 
         meson setup build-android --cross-file ./android-aarch64 \
