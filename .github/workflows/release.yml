@@ -1,8 +1,5 @@
 name: release
-on:
-  push:
-    tags:
-      - '*'
+on: workflow_dispatch
 
 env:
   mesa-version: 25.0.5
