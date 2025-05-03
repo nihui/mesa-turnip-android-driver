@@ -38,9 +38,9 @@ jobs:
 
         ninja -C build-android
 
-        mv build-android/src/freedreno/vulkan/libvulkan_freedreno.so vulkan.turnip.so
+        mv build-android/src/freedreno/vulkan/libvulkan_freedreno.so libvulkan_freedreno.so
 
-        zip -9 mesa-turnip-android-${{ env.mesa-version }}.zip vulkan.turnip.so
+        zip -9 mesa-turnip-android-${{ env.mesa-version }}.zip libvulkan_freedreno.so
 
     - name: release
       uses: softprops/action-gh-release@v2
