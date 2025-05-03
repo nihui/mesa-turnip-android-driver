@@ -24,6 +24,9 @@ ncnn::unload_vulkan_driver();
 - Hot-swap android vulkan driver at runtime
 - Full support for Adreno 6xx/7xx series
 - Better performance than the system blobs
+- Can be used directly in your application
+- All vulkan extensions implemented are enabled
+- Support Android 8.0 or later
 
 # Credits
 - https://gitlab.freedesktop.org/mesa/mesa for mesa turnip driver source
