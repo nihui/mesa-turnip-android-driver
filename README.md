@@ -1,14 +1,14 @@
-# vulkan.turnip.so
+# mesa turnip android driver
 mesa turnip driver for android
 
-Download prebuilt binary at https://github.com/nihui/vulkan.turnip.so/releases/latest
+Download prebuilt binary at https://github.com/nihui/mesa-turnip-android-driver/releases/latest
 
 This turnip driver library can be used with ncnn vulkan loader [simplevk.h](https://github.com/Tencent/ncnn/blob/master/src/simplevk.h)
 
 ```cpp
 #include "simplevk.h"
 
-ncnn::load_vulkan_driver("vulkan.turnip.so");
+ncnn::load_vulkan_driver("libvulkan_freedreno.so");
 
 // now you call any global vulkan functions
 // ncnn::vkGetInstanceProcAddr
