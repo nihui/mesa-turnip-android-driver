@@ -32,6 +32,8 @@ jobs:
             -Dandroid-stub=true \
             -Dvideo-codecs= \
             -Dgallium-drivers= \
+            -Dglx=disabled \
+            -Degl=disabled \
             -Dvulkan-drivers=freedreno \
             -Dfreedreno-kmds=kgsl \
             -Db_lto=true -Dstrip=true
