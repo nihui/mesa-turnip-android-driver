@@ -15,6 +15,9 @@ jobs:
     - name: apt
       run: sudo apt-get install -y meson patchelf python3-pip flex bison python3-mako python-is-python3 glslang-tools
 
+    - name: pip
+      run: pip3 install -U meson --user
+
     - name: build
       run: |
         wget -q https://archive.mesa3d.org/mesa-${{ env.mesa-version }}.tar.xz
