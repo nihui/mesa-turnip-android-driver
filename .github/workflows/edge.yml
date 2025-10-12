@@ -1,0 +1,56 @@
+name: edge
+on: workflow_dispatch
+
+env:
+  mesa-version: edge
+
+jobs:
+  edge:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: ndk-fix-debug
+      run: sed -i -e '/^  -g$/d' $ANDROID_NDK_LATEST_HOME/build/cmake/android-legacy.toolchain.cmake
+
+    - name: apt
+      run: sudo apt-get install -y meson patchelf python3-pip flex bison python3-mako python-is-python3 glslang-tools
+
+    - name: pip
+      run: pip3 install -U meson --user
+
+    - name: build
+      run: |
+        git clone https://gitlab.freedesktop.org/mesa/mesa.git --depth 1 --recursive
+        cd mesa
+
+        sed -e "s|NDKDIR|$ANDROID_NDK_LATEST_HOME|g" < ../android-aarch64 > android-aarch64
+        patch -p1 -i ../mesa-implement-android_stub.patch
+        patch -p1 -i ../mesa-android-include-all-vulkan-extension.patch
+        patch -p1 -i ../mesa-turnip-adreno-8xx.patch
+
+        meson setup build-android --cross-file ./android-aarch64 \
+            -Dbuildtype=release \
+            -Dplatforms=android \
+            -Dplatform-sdk-version=26 \
+            -Dandroid-stub=true \
+            -Dvideo-codecs= \
+            -Dgallium-drivers= \
+            -Dglx=disabled \
+            -Degl=disabled \
+            -Dvulkan-drivers=freedreno \
+            -Dfreedreno-kmds=kgsl \
+            -Db_lto=true -Dstrip=true
+
+        ninja -C build-android
+
+        mv build-android/src/freedreno/vulkan/libvulkan_freedreno.so libvulkan_freedreno.so
+
+        zip -9 mesa-turnip-android-${{ env.mesa-version }}.zip libvulkan_freedreno.so
+
+    - name: release
+      uses: softprops/action-gh-release@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        tag_name: ${{ env.mesa-version }}
+        name: mesa turnip driver for android ${{ env.mesa-version }}
+        files: mesa-${{ env.mesa-version }}/mesa-turnip-android-${{ env.mesa-version }}.zip
