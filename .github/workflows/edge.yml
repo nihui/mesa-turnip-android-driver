@@ -53,4 +53,4 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         tag_name: ${{ env.mesa-version }}
         name: mesa turnip driver for android ${{ env.mesa-version }}
-        files: mesa-${{ env.mesa-version }}/mesa-turnip-android-${{ env.mesa-version }}.zip
+        files: mesa/mesa-turnip-android-${{ env.mesa-version }}.zip
