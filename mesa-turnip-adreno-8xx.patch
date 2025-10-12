@@ -1,0 +1,13 @@
+diff -Nuarp mesa/src/freedreno/vulkan/tu_device.cc mesa.tu8xx/src/freedreno/vulkan/tu_device.cc
+--- mesa/src/freedreno/vulkan/tu_device.cc	2025-10-12 20:47:18.236340782 +0800
++++ mesa.tu8xx/src/freedreno/vulkan/tu_device.cc	2025-10-12 20:47:50.740522659 +0800
+@@ -1551,7 +1551,8 @@ tu_physical_device_init(struct tu_physic
+ 
+    switch (fd_dev_gen(&device->dev_id)) {
+    case 6:
+-   case 7: {
++   case 7:
++   case 8: {
+       device->dev_info = info;
+       device->info = &device->dev_info;
+       uint32_t depth_cache_size =
