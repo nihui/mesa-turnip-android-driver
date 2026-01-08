@@ -2,7 +2,7 @@ name: release
 on: workflow_dispatch
 
 env:
-  mesa-version: 25.2.6
+  mesa-version: 25.3.3
 
 jobs:
   release:
