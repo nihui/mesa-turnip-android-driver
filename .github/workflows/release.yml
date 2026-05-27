@@ -39,7 +39,7 @@ jobs:
             -Degl=disabled \
             -Dvulkan-drivers=freedreno \
             -Dfreedreno-kmds=kgsl \
-            -Db_lto=true -Dstrip=true
+            -Db_lto=true -Dallow-broken-lto=true -Dstrip=true
 
         ninja -C build-android
 

@@ -434,7 +434,7 @@ diff -Nuarp mesa-25.0.0/src/android_stub/sync_stub.cpp mesa-25.0.0.android_stub/
  
  struct sync_file_info* sync_file_info(int32_t fd)
  {
--   return NULL;
+-   return nullptr;
 +   return lib_sync_file_info(fd);
  }
  

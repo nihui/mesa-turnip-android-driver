@@ -26,7 +26,6 @@ jobs:
         sed -e "s|NDKDIR|$ANDROID_NDK_LATEST_HOME|g" < ../android-aarch64 > android-aarch64
         patch -p1 -i ../mesa-implement-android_stub.patch
         patch -p1 -i ../mesa-android-include-all-vulkan-extension.patch
-        patch -p1 -i ../mesa-turnip-adreno-8xx.patch
 
         meson setup build-android --cross-file ./android-aarch64 \
             -Dbuildtype=release \
@@ -39,7 +38,7 @@ jobs:
             -Degl=disabled \
             -Dvulkan-drivers=freedreno \
             -Dfreedreno-kmds=kgsl \
-            -Db_lto=true -Dstrip=true
+            -Db_lto=true -Dallow-broken-lto=true -Dstrip=true
 
         ninja -C build-android
 
