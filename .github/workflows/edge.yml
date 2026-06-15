@@ -47,7 +47,7 @@ jobs:
         zip -9 mesa-turnip-android-${{ env.mesa-version }}.zip libvulkan_freedreno.so
 
     - name: release
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v3
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         tag_name: ${{ env.mesa-version }}
