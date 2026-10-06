@@ -1,74 +1,6 @@
-diff -Nuarp mesa-25.0.0/src/android_stub/cutils_stub.cpp mesa-25.0.0.android_stub/src/android_stub/cutils_stub.cpp
---- mesa-25.0.0/src/android_stub/cutils_stub.cpp	2025-02-19 22:57:11.000000000 +0800
-+++ mesa-25.0.0.android_stub/src/android_stub/cutils_stub.cpp	2025-02-21 22:50:54.467080507 +0800
-@@ -1,32 +1,61 @@
- #include <cutils/properties.h>
- #include <cutils/trace.h>
- 
-+#include "dlfcn_nougat.h"
-+
-+typedef int (*PFN_property_get)(const char *key, char *value, const char *default_value);
-+typedef void (*PFN_atrace_begin_body)(const char * name);
-+typedef void (*PFN_atrace_end_body)();
-+typedef void (*PFN_atrace_init)();
-+typedef uint64_t (*PFN_atrace_get_enabled_tags)();
-+
-+static void* lib = 0;
-+static PFN_property_get lib_property_get = 0;
-+static PFN_atrace_begin_body lib_atrace_begin_body = 0;
-+static PFN_atrace_end_body lib_atrace_end_body = 0;
-+static PFN_atrace_init lib_atrace_init = 0;
-+static PFN_atrace_get_enabled_tags lib_atrace_get_enabled_tags = 0;
-+
-+__attribute__((constructor))
-+static void init()
-+{
-+   lib = fake_dlopen("libcutils.so", 0);
-+   lib_property_get = (PFN_property_get)fake_dlsym(lib, "property_get");
-+   lib_atrace_begin_body = (PFN_atrace_begin_body)fake_dlsym(lib, "atrace_begin_body");
-+   lib_atrace_end_body = (PFN_atrace_end_body)fake_dlsym(lib, "atrace_end_body");
-+   lib_atrace_init = (PFN_atrace_init)fake_dlsym(lib, "atrace_init");
-+   lib_atrace_get_enabled_tags = (PFN_atrace_get_enabled_tags)fake_dlsym(lib, "atrace_get_enabled_tags");
-+}
-+
- extern "C" {
- 
- int
- property_get(const char *key, char *value, const char *default_value)
- {
--   return 0;
-+   return lib_property_get(key, value, default_value);
- }
- 
- void
--atrace_begin_body(const char * /*name*/)
-+atrace_begin_body(const char * name)
- {
-+   return lib_atrace_begin_body(name);
- }
- 
- void
- atrace_end_body()
- {
-+   return lib_atrace_end_body();
- }
- 
- void
- atrace_init()
- {
-+   return lib_atrace_init();
- }
- 
- uint64_t
- atrace_get_enabled_tags()
- {
--   return ATRACE_TAG_NOT_READY;
-+   return lib_atrace_get_enabled_tags();
- }
- }
-diff -Nuarp mesa-25.0.0/src/android_stub/dlfcn_nougat.cpp mesa-25.0.0.android_stub/src/android_stub/dlfcn_nougat.cpp
---- mesa-25.0.0/src/android_stub/dlfcn_nougat.cpp	1970-01-01 08:00:00.000000000 +0800
-+++ mesa-25.0.0.android_stub/src/android_stub/dlfcn_nougat.cpp	2025-02-21 22:31:14.564970157 +0800
+diff -Nuarp mesa-26.2.4/src/android_stub/dlfcn_nougat.cpp mesa-26.2.4.android_stub/src/android_stub/dlfcn_nougat.cpp
+--- mesa-26.2.4/src/android_stub/dlfcn_nougat.cpp	1970-01-01 08:00:00.000000000 +0800
++++ mesa-26.2.4.android_stub/src/android_stub/dlfcn_nougat.cpp	2025-02-21 22:31:14.564970157 +0800
 @@ -0,0 +1,244 @@
 +// Copyright (c) 2016 avs333
 +//
@@ -314,9 +246,9 @@ diff -Nuarp mesa-25.0.0/src/android_stub/dlfcn_nougat.cpp mesa-25.0.0.android_st
 +    return NULL;
 +}
 +}
-diff -Nuarp mesa-25.0.0/src/android_stub/dlfcn_nougat.h mesa-25.0.0.android_stub/src/android_stub/dlfcn_nougat.h
---- mesa-25.0.0/src/android_stub/dlfcn_nougat.h	1970-01-01 08:00:00.000000000 +0800
-+++ mesa-25.0.0.android_stub/src/android_stub/dlfcn_nougat.h	2025-02-21 22:31:14.564970157 +0800
+diff -Nuarp mesa-26.2.4/src/android_stub/dlfcn_nougat.h mesa-26.2.4.android_stub/src/android_stub/dlfcn_nougat.h
+--- mesa-26.2.4/src/android_stub/dlfcn_nougat.h	1970-01-01 08:00:00.000000000 +0800
++++ mesa-26.2.4.android_stub/src/android_stub/dlfcn_nougat.h	2025-02-21 22:31:14.564970157 +0800
 @@ -0,0 +1,15 @@
 +#ifndef DLFCN_NOUGAT_H
 +#define DLFCN_NOUGAT_H
@@ -333,9 +265,9 @@ diff -Nuarp mesa-25.0.0/src/android_stub/dlfcn_nougat.h mesa-25.0.0.android_stub
 +}
 +
 +#endif //DLFCN_NOUGAT_H
-diff -Nuarp mesa-25.0.0/src/android_stub/hardware_stub.cpp mesa-25.0.0.android_stub/src/android_stub/hardware_stub.cpp
---- mesa-25.0.0/src/android_stub/hardware_stub.cpp	2025-02-19 22:57:11.000000000 +0800
-+++ mesa-25.0.0.android_stub/src/android_stub/hardware_stub.cpp	2025-02-21 22:31:14.564970157 +0800
+diff -Nuarp mesa-26.2.4/src/android_stub/hardware_stub.cpp mesa-26.2.4.android_stub/src/android_stub/hardware_stub.cpp
+--- mesa-26.2.4/src/android_stub/hardware_stub.cpp	2025-02-19 22:57:11.000000000 +0800
++++ mesa-26.2.4.android_stub/src/android_stub/hardware_stub.cpp	2025-02-21 22:31:14.564970157 +0800
 @@ -1,10 +1,24 @@
  #include <hardware/hardware.h>
  
@@ -362,9 +294,9 @@ diff -Nuarp mesa-25.0.0/src/android_stub/hardware_stub.cpp mesa-25.0.0.android_s
  }
  
  }
-diff -Nuarp mesa-25.0.0/src/android_stub/meson.build mesa-25.0.0.android_stub/src/android_stub/meson.build
---- mesa-25.0.0/src/android_stub/meson.build	2025-02-19 22:57:11.000000000 +0800
-+++ mesa-25.0.0.android_stub/src/android_stub/meson.build	2025-02-21 22:31:14.564970157 +0800
+diff -Nuarp mesa-26.2.4/src/android_stub/meson.build mesa-26.2.4.android_stub/src/android_stub/meson.build
+--- mesa-26.2.4/src/android_stub/meson.build	2025-02-19 22:57:11.000000000 +0800
++++ mesa-26.2.4.android_stub/src/android_stub/meson.build	2025-02-21 22:31:14.564970157 +0800
 @@ -7,7 +7,7 @@ if with_android_stub
    endif
  
@@ -388,9 +320,9 @@ diff -Nuarp mesa-25.0.0/src/android_stub/meson.build mesa-25.0.0.android_stub/sr
    dep_android = declare_dependency(
      link_with : stub_libs,
    )
-diff -Nuarp mesa-25.0.0/src/android_stub/sync_stub.cpp mesa-25.0.0.android_stub/src/android_stub/sync_stub.cpp
---- mesa-25.0.0/src/android_stub/sync_stub.cpp	2025-02-19 22:57:11.000000000 +0800
-+++ mesa-25.0.0.android_stub/src/android_stub/sync_stub.cpp	2025-02-21 22:31:14.564970157 +0800
+diff -Nuarp mesa-26.2.4/src/android_stub/sync_stub.cpp mesa-26.2.4.android_stub/src/android_stub/sync_stub.cpp
+--- mesa-26.2.4/src/android_stub/sync_stub.cpp	2025-02-19 22:57:11.000000000 +0800
++++ mesa-26.2.4.android_stub/src/android_stub/sync_stub.cpp	2025-02-21 22:31:14.564970157 +0800
 @@ -1,25 +1,49 @@
  #include <sync/sync.h>
  
