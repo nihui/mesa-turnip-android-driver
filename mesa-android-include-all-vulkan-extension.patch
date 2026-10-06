@@ -1,6 +1,6 @@
-diff -Nuarp mesa-25.0.5.orig/src/vulkan/util/vk_extensions.py mesa-25.0.5/src/vulkan/util/vk_extensions.py
---- mesa-25.0.5.orig/src/vulkan/util/vk_extensions.py	2025-05-01 01:18:00.000000000 +0800
-+++ mesa-25.0.5/src/vulkan/util/vk_extensions.py	2025-05-03 14:12:06.383127710 +0800
+diff -Nuarp mesa-26.2.4.orig/src/vulkan/util/vk_extensions.py mesa-26.2.4/src/vulkan/util/vk_extensions.py
+--- mesa-26.2.4.orig/src/vulkan/util/vk_extensions.py	2025-05-01 01:18:00.000000000 +0800
++++ mesa-26.2.4/src/vulkan/util/vk_extensions.py	2025-05-03 14:12:06.383127710 +0800
 @@ -50,6 +50,7 @@ class Extension:
          return ext
  
