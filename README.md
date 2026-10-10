@@ -1,6 +1,8 @@
 # mesa turnip android driver
 mesa turnip driver for android
 
+![download](https://img.shields.io/github/downloads/nihui/mesa-turnip-android-driver/total.svg)
+
 Download prebuilt binary at https://github.com/nihui/mesa-turnip-android-driver/releases/latest
 
 This turnip driver library can be used with ncnn vulkan loader [simplevk.h](https://github.com/Tencent/ncnn/blob/master/src/simplevk.h)
@@ -22,7 +24,7 @@ ncnn::unload_vulkan_driver();
 ```
 
 - Hot-swap android vulkan driver at runtime
-- Full support for Adreno 6xx/7xx series
+- Full support for Adreno 6xx/7xx/8xx series
 - Better performance than the system blobs
 - Can be used directly in your application
 - All vulkan extensions implemented are enabled
