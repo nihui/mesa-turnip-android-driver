@@ -1,6 +1,6 @@
-diff -Nuarp mesa-26.2.4/src/android_stub/dlfcn_nougat.cpp mesa-26.2.4.android_stub/src/android_stub/dlfcn_nougat.cpp
---- mesa-26.2.4/src/android_stub/dlfcn_nougat.cpp	1970-01-01 08:00:00.000000000 +0800
-+++ mesa-26.2.4.android_stub/src/android_stub/dlfcn_nougat.cpp	2025-02-21 22:31:14.564970157 +0800
+diff -Nuarp mesa-26.3.0/src/android_stub/dlfcn_nougat.cpp mesa-26.3.0.android_stub/src/android_stub/dlfcn_nougat.cpp
+--- mesa-26.3.0/src/android_stub/dlfcn_nougat.cpp	1970-01-01 08:00:00.000000000 +0800
++++ mesa-26.3.0.android_stub/src/android_stub/dlfcn_nougat.cpp	2025-02-21 22:31:14.564970157 +0800
 @@ -0,0 +1,244 @@
 +// Copyright (c) 2016 avs333
 +//
@@ -246,9 +246,9 @@ diff -Nuarp mesa-26.2.4/src/android_stub/dlfcn_nougat.cpp mesa-26.2.4.android_st
 +    return NULL;
 +}
 +}
-diff -Nuarp mesa-26.2.4/src/android_stub/dlfcn_nougat.h mesa-26.2.4.android_stub/src/android_stub/dlfcn_nougat.h
---- mesa-26.2.4/src/android_stub/dlfcn_nougat.h	1970-01-01 08:00:00.000000000 +0800
-+++ mesa-26.2.4.android_stub/src/android_stub/dlfcn_nougat.h	2025-02-21 22:31:14.564970157 +0800
+diff -Nuarp mesa-26.3.0/src/android_stub/dlfcn_nougat.h mesa-26.3.0.android_stub/src/android_stub/dlfcn_nougat.h
+--- mesa-26.3.0/src/android_stub/dlfcn_nougat.h	1970-01-01 08:00:00.000000000 +0800
++++ mesa-26.3.0.android_stub/src/android_stub/dlfcn_nougat.h	2025-02-21 22:31:14.564970157 +0800
 @@ -0,0 +1,15 @@
 +#ifndef DLFCN_NOUGAT_H
 +#define DLFCN_NOUGAT_H
@@ -265,9 +265,9 @@ diff -Nuarp mesa-26.2.4/src/android_stub/dlfcn_nougat.h mesa-26.2.4.android_stub
 +}
 +
 +#endif //DLFCN_NOUGAT_H
-diff -Nuarp mesa-26.2.4/src/android_stub/hardware_stub.cpp mesa-26.2.4.android_stub/src/android_stub/hardware_stub.cpp
---- mesa-26.2.4/src/android_stub/hardware_stub.cpp	2025-02-19 22:57:11.000000000 +0800
-+++ mesa-26.2.4.android_stub/src/android_stub/hardware_stub.cpp	2025-02-21 22:31:14.564970157 +0800
+diff -Nuarp mesa-26.3.0/src/android_stub/hardware_stub.cpp mesa-26.3.0.android_stub/src/android_stub/hardware_stub.cpp
+--- mesa-26.3.0/src/android_stub/hardware_stub.cpp	2025-02-19 22:57:11.000000000 +0800
++++ mesa-26.3.0.android_stub/src/android_stub/hardware_stub.cpp	2025-02-21 22:31:14.564970157 +0800
 @@ -1,10 +1,24 @@
  #include <hardware/hardware.h>
  
@@ -294,9 +294,9 @@ diff -Nuarp mesa-26.2.4/src/android_stub/hardware_stub.cpp mesa-26.2.4.android_s
  }
  
  }
-diff -Nuarp mesa-26.2.4/src/android_stub/meson.build mesa-26.2.4.android_stub/src/android_stub/meson.build
---- mesa-26.2.4/src/android_stub/meson.build	2025-02-19 22:57:11.000000000 +0800
-+++ mesa-26.2.4.android_stub/src/android_stub/meson.build	2025-02-21 22:31:14.564970157 +0800
+diff -Nuarp mesa-26.3.0/src/android_stub/meson.build mesa-26.3.0.android_stub/src/android_stub/meson.build
+--- mesa-26.3.0/src/android_stub/meson.build	2025-02-19 22:57:11.000000000 +0800
++++ mesa-26.3.0.android_stub/src/android_stub/meson.build	2025-02-21 22:31:14.564970157 +0800
 @@ -7,7 +7,7 @@ if with_android_stub
    endif
  
@@ -320,9 +320,9 @@ diff -Nuarp mesa-26.2.4/src/android_stub/meson.build mesa-26.2.4.android_stub/sr
    dep_android = declare_dependency(
      link_with : stub_libs,
    )
-diff -Nuarp mesa-26.2.4/src/android_stub/sync_stub.cpp mesa-26.2.4.android_stub/src/android_stub/sync_stub.cpp
---- mesa-26.2.4/src/android_stub/sync_stub.cpp	2025-02-19 22:57:11.000000000 +0800
-+++ mesa-26.2.4.android_stub/src/android_stub/sync_stub.cpp	2025-02-21 22:31:14.564970157 +0800
+diff -Nuarp mesa-26.3.0/src/android_stub/sync_stub.cpp mesa-26.3.0.android_stub/src/android_stub/sync_stub.cpp
+--- mesa-26.3.0/src/android_stub/sync_stub.cpp	2025-02-19 22:57:11.000000000 +0800
++++ mesa-26.3.0.android_stub/src/android_stub/sync_stub.cpp	2025-02-21 22:31:14.564970157 +0800
 @@ -1,25 +1,49 @@
  #include <sync/sync.h>
  
